@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segurança Digital para Idosos</title>
+    
+    <style>
+        /* --- ESTILOS GERAIS DA PÁGINA --- */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+
+        .btn-ajuda {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* --- ESTILOS DO MODAL E OVERLAY --- */
+        /* O overlay começa escondido com 'display: none' */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6); /* Fundo escurecido */
+            backdrop-filter: blur(5px); /* Efeito desfoque */
+            z-index: 999;
+            
+            /* Centraliza o modal na tela */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Classe que o JavaScript vai usar para mostrar o modal */
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 600px;
+            text-align: center;
+        }
+
+        .btn-fechar {
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Segurança Digital para Idosos</h1>
+    <p>Bem-vindo ao portal. Clique no botão abaixo se precisar de auxílio com a navegação.</p>
+    
+    <!-- Botão que abre o modal -->
+    <button class="btn-ajuda" id="abrirModal">Clique para Ajuda</button>
+
+    <!-- ESTRUTURA DO MODAL (Fundo + Conteúdo) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <h2>Como podemos ajudar?</h2>
+            <p>Aqui você encontra dicas rápidas de navegação. Para fechar esta janela e voltar ao site, basta clicar no botão vermelho abaixo.</p>
+            <!-- Botão que fecha o modal -->
+            <button class="btn-fechar" id="fecharModal">Fechar Janela</button>
+        </div>
+    </div>
+
+    <!-- --- JAVASCRIPT PARA COMPORTAMENTO --- -->
+    <script>
+        // Seleciona os elementos da página
+        const botaoAbrir = document.getElementById('abrirModal');
+        const botaoFechar = document.getElementById('fecharModal');
+        const overlay = document.getElementById('modalOverlay');
+
+        // Função para abrir o modal adicionando a classe 'active'
+        botaoAbrir.addEventListener('click', () => {
+            overlay.classList.add('active');
+        });
+
+        // Função para fechar o modal removendo a classe 'active'
+        botaoFechar.addEventListener('click', () => {
+            overlay.classList.remove('active');
+        });
+
+        // Opcional: Fecha o modal se o usuário clicar no fundo escuro fora da caixinha
+        overlay.addEventListener('click', (evento) => {
+            if (evento.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
