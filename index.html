@@ -6,7 +6,16 @@
     <title>Segurança Digital para Idosos</title>
     
     <style>
-        /* --- ESTILOS GERAIS DA PÁGINA --- */
+        /* --- VARIÁVEIS DE DESIGN --- */
+        :root {
+            --cor-primaria: #1e3a8a;
+            --cor-fundo: #f8fafc;
+            --cor-texto: #0f172a;
+            --cor-alerta: #dc2626;
+            --cor-alerta-hover: #b91c1c;
+            --fonte-padrao: system-ui, -apple-system, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,96 +23,177 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--fonte-padrao);
             line-height: 1.6;
-            padding: 30px;
-            background-color: #f4f4f9;
-            font-size: 1.3rem; /* Fonte maior para facilitar leitura */
+            padding: 2rem;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-size: 1.25rem;
+        }
+
+        .container-principal {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
-            color: #1e3a8a;
-            margin-bottom: 15px;
+            color: var(--cor-primaria);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
         }
 
         p {
-            margin-bottom: 25px;
-            color: #333;
+            margin-bottom: 1.5rem;
         }
 
-        /* Botão de ajuda ajustado para o padrão do roteiro (Vermelho e chamativo) */
+        /* --- BOTÃO PRINCIPAL DE AJUDA --- */
         .btn-ajuda {
-            padding: 15px 30px;
-            font-size: 1.4rem;
-            background-color: #dc2626; 
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            background-color: var(--cor-alerta);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+
+        .btn-ajuda:hover, .btn-ajuda:focus-visible {
+            background-color: var(--cor-alerta-hover);
+            transform: translateY(-2px);
+            outline: 3px solid #fca5a5;
+        }
+
+        /* --- MODAL E OVERLAY --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+
+            /* Transição de visibilidade */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Estado ativo do modal */
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            
+            /* Animação de entrada do conteúdo */
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-container h2 {
+            color: var(--cor-primaria);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-fechar {
+            padding: 0.8rem 1.8rem;
+            font-size: 1.1rem;
+            background-color: var(--cor-alerta);
+            color: #ffffff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background 0.2s;
+            transition: background-color 0.2s;
         }
 
-        .btn-ajuda:hover {
-            background-color: #b91c1c;
-        }
-
-        /* --- ESTILOS DO MODAL E OVERLAY --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(5px); 
-            z-index: 999;
-            
-            /* Exibição oculta por padrão */
-            display: none; 
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Classe ativada via JavaScript */
-        .modal-overlay.active {
-            display: flex !important;
-        }
-
-        .modal-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            max-width: 90%;
-            width: 550px;
-            text-align: center;
-        }
-
-        .modal-container h2 {
-            color: #1e3a8a;
-            margin-bottom: 15px;
-        }
-
-        .btn-fechar {
-            margin-top: 25px;
-            padding: 12px 24px;
-            font-size: 1.1rem;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .btn-fechar:hover {
-            background-color: #bd2130;
+        .btn-fechar:hover, .btn-fechar:focus-visible {
+            background-color: var(--cor-alerta-hover);
+            outline: 3px solid #fca5a5;
         }
     </style>
 </head>
 <body>
 
-    <h1>Segurança Digital para Idosos</h1>
-    <p>Bem-vindo ao portal. Clique no botão abaixo se precisar de auxílio com a navegação.</p>
+    <main class="container-principal">
+        <h1>Segurança Digital para Idosos</h1>
+        <p>Bem-vindo ao nosso portal de apoio. Se você tiver qualquer dúvida ou se sentir inseguro em alguma página, clique no botão de ajuda abaixo.</p>
+        
+        <button class="btn-ajuda" id="abrirModal" aria-haspopup="dialog">
+            <span>🆘</span> Preciso de ajuda agora
+        </button>
+    </main>
+
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="tituloModal">
+        <div class="modal-container">
+            <h2 id="tituloModal">Como podemos ajudar?</h2>
+            <p>Estamos aqui para garantir sua segurança. Se precisar de suporte, acione nosso atendimento exclusivo ou feche esta janela no botão abaixo.</p>
+            <button class="btn-fechar" id="fecharModal">Fechar Janela</button>
+        </div>
+    </div>
+
+    <script>
+        const btnAbrir = document.getElementById('abrirModal');
+        const btnFechar = document.getElementById('fecharModal');
+        const overlay = document.getElementById('modalOverlay');
+
+        function abrirModal() {
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            // Coloca o foco direto no botão de fechar para ajudar a navegação por teclado
+            btnFechar.focus();
+        }
+
+        function fecharModal() {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            // Retorna o foco para o botão que abriu o modal
+            btnAbrir.focus();
+        }
+
+        // Eventos de Abertura e Fechamento
+        btnAbrir.addEventListener('click', abrirModal);
+        btnFechar.addEventListener('click', fecharModal);
+
+        // Fechar ao clicar fora do conteúdo
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) fecharModal();
+        });
+
+        // Fechar com a tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                fecharModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
