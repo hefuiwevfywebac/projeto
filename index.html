@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Segurança Digital para Idosos</title>
+    <title>Portal Guia Seguro - Internet para a Terceira Idade</title>
     
     <style>
-        /* --- VARIÁVEIS DE DESIGN --- */
+        /* --- ESTILOS BASE E CORES --- */
         :root {
-            --cor-primaria: #1e3a8a;
-            --cor-fundo: #f8fafc;
-            --cor-texto: #0f172a;
-            --cor-alerta: #dc2626;
-            --cor-alerta-hover: #b91c1c;
-            --fonte-padrao: system-ui, -apple-system, sans-serif;
+            --azul-escuro: #0f172a;
+            --azul-principal: #2563eb;
+            --azul-hover: #1d4ed8;
+            --fundo-pagina: #f1f5f9;
+            --texto: #1e293b;
+            --vermelho-alerta: #dc2626;
+            --vermelho-hover: #b91c1c;
         }
 
         * {
@@ -23,177 +24,240 @@
         }
 
         body {
-            font-family: var(--fonte-padrao);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fundo-pagina);
+            color: var(--texto);
             line-height: 1.6;
-            padding: 2rem;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            font-size: 1.25rem;
+            font-size: 1.25rem; /* Fonte ampliada por padrão */
+            padding-bottom: 100px;
         }
 
-        .container-principal {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        /* --- CABEÇALHO --- */
+        header {
+            background-color: var(--azul-escuro);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            color: var(--cor-primaria);
+        header h1 {
             font-size: 2.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        p {
-            margin-bottom: 1.5rem;
+        header p {
+            font-size: 1.3rem;
+            color: #94a3b8;
         }
 
-        /* --- BOTÃO PRINCIPAL DE AJUDA --- */
-        .btn-ajuda {
-            display: inline-flex;
+        /* --- CONTEÚDO PRINCIPAL --- */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .introducao {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .grid-dicas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Cartões de Conteúdo */
+        .card-dica {
+            background: white;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 6px solid var(--azul-principal);
+            transition: transform 0.2s ease;
+        }
+
+        .card-dica:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-dica .icone {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-dica h3 {
+            color: var(--azul-escuro);
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* --- BOTÃO FLUTUANTE DE EMERGÊNCIA/AJUDA --- */
+        .btn-ajuda-flutuante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--vermelho-alerta);
+            color: white;
+            border: none;
+            padding: 1rem 1.8rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+            display: flex;
             align-items: center;
             gap: 10px;
-            padding: 1rem 2rem;
-            font-size: 1.3rem;
-            background-color: var(--cor-alerta);
-            color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
-            transition: transform 0.15s ease, background-color 0.2s ease;
+            transition: background-color 0.2s, transform 0.2s;
+            z-index: 100;
         }
 
-        .btn-ajuda:hover, .btn-ajuda:focus-visible {
-            background-color: var(--cor-alerta-hover);
-            transform: translateY(-2px);
+        .btn-ajuda-flutuante:hover, .btn-ajuda-flutuante:focus-visible {
+            background-color: var(--vermelho-hover);
+            transform: scale(1.05);
             outline: 3px solid #fca5a5;
         }
 
-        /* --- MODAL E OVERLAY --- */
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background-color: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(6px);
-            z-index: 1000;
-            
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
-
-            /* Transição de visibilidade */
+            padding: 1.5rem;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
+            z-index: 1000;
         }
 
-        /* Estado ativo do modal */
-        .modal-overlay.active {
+        .modal-overlay.ativo {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .modal-container {
-            background-color: #ffffff;
+        .modal-caixa {
+            background: white;
             padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
+            border-radius: 20px;
+            max-width: 550px;
             width: 100%;
             text-align: center;
-            
-            /* Animação de entrada do conteúdo */
-            transform: scale(0.9);
+            transform: translateY(20px);
             transition: transform 0.3s ease;
         }
 
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
+        .modal-overlay.ativo .modal-caixa {
+            transform: translateY(0);
         }
 
-        .modal-container h2 {
-            color: var(--cor-primaria);
+        .modal-caixa h2 {
+            color: var(--azul-escuro);
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
         .btn-fechar {
-            padding: 0.8rem 1.8rem;
-            font-size: 1.1rem;
-            background-color: var(--cor-alerta);
-            color: #ffffff;
+            margin-top: 1.5rem;
+            background-color: var(--azul-principal);
+            color: white;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            transition: background-color 0.2s;
+            border-radius: 10px;
+            cursor: pointer;
         }
 
-        .btn-fechar:hover, .btn-fechar:focus-visible {
-            background-color: var(--cor-alerta-hover);
-            outline: 3px solid #fca5a5;
+        .btn-fechar:hover {
+            background-color: var(--azul-hover);
         }
     </style>
 </head>
 <body>
 
-    <main class="container-principal">
-        <h1>Segurança Digital para Idosos</h1>
-        <p>Bem-vindo ao nosso portal de apoio. Se você tiver qualquer dúvida ou se sentir inseguro em alguma página, clique no botão de ajuda abaixo.</p>
-        
-        <button class="btn-ajuda" id="abrirModal" aria-haspopup="dialog">
-            <span>🆘</span> Preciso de ajuda agora
-        </button>
+    <header>
+        <h1>Guia Digital Seguro</h1>
+        <p>Aprenda a navegar pela internet com tranquilidade e proteção.</p>
+    </header>
+
+    <main>
+        <section class="introducao">
+            <h2>Dicas Rápidas de Segurança</h2>
+            <p>Selecione os tópicos abaixo para conferir boas práticas ao usar seu celular ou computador no dia a dia.</p>
+        </section>
+
+        <section class="grid-dicas">
+            <article class="card-dica">
+                <div class="icone">🔐</div>
+                <h3>Senhas Fortes</h3>
+                <p>Evite usar datas de nascimento. Combine letras e números e não anote suas senhas em papéis fáceis de perder.</p>
+            </article>
+
+            <article class="card-dica">
+                <div class="icone">⚠️</div>
+                <h3>Cuidado com Links</h3>
+                <p>Não clique em links recebidos por mensagem de desconhecidos prometendo prêmios ou pagamentos urgentes.</p>
+            </article>
+
+            <article class="card-dica">
+                <div class="icone">🏦</div>
+                <h3>Bancos e PIX</h3>
+                <p>Bancos nunca ligam pedindo sua senha ou transferência para testes. Em caso de dúvida, ligue diretamente para o gerente.</p>
+            </article>
+        </section>
     </main>
 
+    <button class="btn-ajuda-flutuante" id="btnAbrirModal" aria-haspopup="dialog">
+        <span>🆘</span> Precisa de Ajuda?
+    </button>
+
     <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="tituloModal">
-        <div class="modal-container">
-            <h2 id="tituloModal">Como podemos ajudar?</h2>
-            <p>Estamos aqui para garantir sua segurança. Se precisar de suporte, acione nosso atendimento exclusivo ou feche esta janela no botão abaixo.</p>
-            <button class="btn-fechar" id="fecharModal">Fechar Janela</button>
+        <div class="modal-caixa">
+            <h2 id="tituloModal">Precisa de Suporte?</h2>
+            <p>Se você suspeita de algum golpe ou está com dúvidas sobre como realizar um passo no site, peça ajuda a um familiar de confiança ou entre em contato com nossa equipe.</p>
+            <button class="btn-fechar" id="btnFecharModal">Entendi / Fechar</button>
         </div>
     </div>
 
     <script>
-        const btnAbrir = document.getElementById('abrirModal');
-        const btnFechar = document.getElementById('fecharModal');
+        const btnAbrir = document.getElementById('btnAbrirModal');
+        const btnFechar = document.getElementById('btnFecharModal');
         const overlay = document.getElementById('modalOverlay');
 
         function abrirModal() {
-            overlay.classList.add('active');
+            overlay.classList.add('ativo');
             overlay.setAttribute('aria-hidden', 'false');
-            // Coloca o foco direto no botão de fechar para ajudar a navegação por teclado
             btnFechar.focus();
         }
 
         function fecharModal() {
-            overlay.classList.remove('active');
+            overlay.classList.remove('ativo');
             overlay.setAttribute('aria-hidden', 'true');
-            // Retorna o foco para o botão que abriu o modal
             btnAbrir.focus();
         }
 
-        // Eventos de Abertura e Fechamento
         btnAbrir.addEventListener('click', abrirModal);
         btnFechar.addEventListener('click', fecharModal);
 
-        // Fechar ao clicar fora do conteúdo
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) fecharModal();
         });
 
-        // Fechar com a tecla ESC
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+            if (e.key === 'Escape' && overlay.classList.contains('ativo')) {
                 fecharModal();
             }
         });
     </script>
-
 </body>
 </html>
