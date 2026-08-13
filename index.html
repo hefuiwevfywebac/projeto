@@ -60,13 +60,13 @@
             backdrop-filter: blur(5px); 
             z-index: 999;
             
-            /* Usamos display: none por padrão */
+            /* Exibição oculta por padrão */
             display: none; 
             justify-content: center;
             align-items: center;
         }
 
-        /* CORREÇÃO: Forçamos o display flex com !important para garantir que vença o 'none' */
+        /* Classe ativada via JavaScript */
         .modal-overlay.active {
             display: flex !important;
         }
@@ -107,40 +107,3 @@
 
     <h1>Segurança Digital para Idosos</h1>
     <p>Bem-vindo ao portal. Clique no botão abaixo se precisar de auxílio com a navegação.</p>
-    
-    <!-- Botão que abre o modal -->
-    <button class="btn-ajuda" id="abrirModal">Preciso de ajuda agora</button>
-
-    <!-- ESTRUTURA DO MODAL (Fundo + Conteúdo) -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-container">
-            <h2>Como podemos ajudar?</h2>
-            <p>Aqui você encontra dicas rápidas de segurança e navegação. Para fechar esta janela e voltar ao site, basta clicar no botão vermelho logo abaixo.</p>
-            <!-- Botão que fecha o modal -->
-            <button class="btn-fechar" id="fecharModal">Fechar Janela</button>
-        </div>
-    </div>
-
-    <!-- --- JAVASCRIPT --- -->
-    <script>
-        const botaoAbrir = document.getElementById('abrirModal');
-        const botaoFechar = document.getElementById('fecharModal');
-        const overlay = document.getElementById('modalOverlay');
-
-        botaoAbrir.addEventListener('click', () => {
-            overlay.classList.add('active');
-        });
-
-        botaoFechar.addEventListener('click', () => {
-            overlay.classList.remove('active');
-        });
-
-        overlay.addEventListener('click', (evento) => {
-            if (evento.target === overlay) {
-                overlay.classList.remove('active');
-            }
-        });
-    </script>
-
-</body>
-</html>
